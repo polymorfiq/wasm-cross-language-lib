@@ -14,13 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Run tests
+      working-directory: ./core
+      run: cargo test --verbose
     - run: rustup target add wasm32-unknown-unknown
     - name: Build
       working-directory: ./core
       run: cargo build --verbose
-    - name: Run tests
-      working-directory: ./core
-      run: cargo test --verbose
     - uses: actions/setup-elixir@v1
       with:
         otp-version: '25'

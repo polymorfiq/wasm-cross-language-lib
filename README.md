@@ -1,10 +1,11 @@
 ```
-cd core;
+cd lib_core;
+cargo test;
 cargo build --release;
-cp target/wasm32-unknown-unknown/release/core.wasm ../elixir/core/priv/core.wasm
+cp target/wasm32-unknown-unknown/release/lib_core.wasm ../elixir/core/priv/lib_core.wasm
 cd ..;
 
 cd elixir/core;
 mix deps.get;
-mix run;
+mix test;
 ```
