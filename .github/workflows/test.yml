@@ -15,11 +15,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run tests
-      working-directory: ./core
+      working-directory: ./lib_core
       run: cargo test --verbose
     - run: rustup target add wasm32-unknown-unknown
     - name: Build
-      working-directory: ./core
+      working-directory: ./lib_core
       run: cargo build --verbose
     - uses: actions/setup-elixir@v1
       with:
