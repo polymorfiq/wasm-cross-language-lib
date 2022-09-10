@@ -17,9 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run tests
+      working-directory: ${{env.working-directory}}
       run: cargo test --verbose
     - run: rustup target add wasm32-unknown-unknown
     - name: Build
+      working-directory: ${{env.working-directory}}
       run: cargo build --verbose
 
   test_elixir:
@@ -29,7 +31,7 @@ jobs:
       working-directory: ./elixir/core
     steps:
       - name: Get latest WASM file
-        working-directory: ./elixir/core
+        working-directory: ${{env.working-directory}}
         run: cp ../../lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm
       - uses: actions/setup-elixir@v1
         with:
