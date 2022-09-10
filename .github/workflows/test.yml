@@ -23,6 +23,10 @@ jobs:
     - name: Build
       working-directory: ${{env.working-directory}}
       run: cargo build --verbose
+    - uses: actions/upload-artifact@master
+      with:
+        name: core-wasm
+        path: lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm
 
   test_elixir:
     needs: test_and_build_rust
@@ -31,9 +35,10 @@ jobs:
       working-directory: ./elixir/core
     steps:
       - uses: actions/checkout@v2
-      - name: Get latest WASM file
-        working-directory: ${{env.working-directory}}
-        run: cp ../../lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm
+      - uses: actions/download-artifact@master
+        with:
+          name: core-wasm
+          path: priv/lib_core.wasm
       - uses: actions/setup-elixir@v1
         with:
           otp-version: '25'
