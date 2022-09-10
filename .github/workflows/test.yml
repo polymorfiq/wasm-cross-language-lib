@@ -15,8 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
+      working-directory: ./core
       run: cargo build --verbose
     - name: Run tests
+      working-directory: ./core
       run: cargo test --verbose
     - uses: actions/setup-elixir@v1
       with:
