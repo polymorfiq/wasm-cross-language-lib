@@ -44,3 +44,7 @@ jobs:
           otp-version: '25'
           elixir-version: '1.14.0'
           experimental-otp: true
+      - run: mix deps.get
+        working-directory: ${{env.working-directory}}
+      - run: mix test
+        working-directory: ${{env.working-directory}}
