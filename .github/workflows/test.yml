@@ -30,6 +30,7 @@ jobs:
     env:
       working-directory: ./elixir/core
     steps:
+      - uses: actions/checkout@v2
       - name: Get latest WASM file
         working-directory: ${{env.working-directory}}
         run: cp ../../lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm
