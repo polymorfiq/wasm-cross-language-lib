@@ -12,4 +12,4 @@ mix deps.get;
 mix test;
 ```
 
-Checkout the [Github Action](.github/workflows/test.yml) for more build information!
+Checkout the [Github Action](./github/workflows/test.yml) for more build information!
