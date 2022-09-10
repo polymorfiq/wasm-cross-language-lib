@@ -24,6 +24,7 @@ jobs:
 
   test_elixir:
     needs: test_and_build_rust
+    runs-on: ubuntu-latest
     steps:
       - name: Get latest WASM file
         working-directory: ./elixir/core
