@@ -1,10 +1,8 @@
 name: test
 
 on:
-  push:
-    branches: [ feature/github-actions ]
   pull_request:
-    branches: [ feature/github-actions ]
+    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -38,7 +36,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: core-wasm
-          path: priv/lib_core.wasm
+          path: elixir/core/priv/lib_core.wasm
       - uses: actions/setup-elixir@v1
         with:
           otp-version: '25'
