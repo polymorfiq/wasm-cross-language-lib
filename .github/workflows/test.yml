@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  test_and_build_rust:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,8 +21,15 @@ jobs:
     - name: Build
       working-directory: ./lib_core
       run: cargo build --verbose
-    - uses: actions/setup-elixir@v1
-      with:
-        otp-version: '25'
-        elixir-version: '1.14.0'
-        experimental-otp: true
+
+  test_elixir:
+    needs: test_and_build_rust
+    steps:
+      - name: Get latest WASM file
+        working-directory: ./elixir/core
+        run: cp ../../lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm
+      - uses: actions/setup-elixir@v1
+        with:
+          otp-version: '25'
+          elixir-version: '1.14.0'
+          experimental-otp: true
