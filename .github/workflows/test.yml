@@ -12,19 +12,21 @@ env:
 jobs:
   test_and_build_rust:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./lib_core
     steps:
     - uses: actions/checkout@v2
     - name: Run tests
-      working-directory: ./lib_core
       run: cargo test --verbose
     - run: rustup target add wasm32-unknown-unknown
     - name: Build
-      working-directory: ./lib_core
       run: cargo build --verbose
 
   test_elixir:
     needs: test_and_build_rust
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./elixir/core
     steps:
       - name: Get latest WASM file
         working-directory: ./elixir/core
