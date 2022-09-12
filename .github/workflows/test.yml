@@ -14,9 +14,6 @@ jobs:
       working-directory: ./lib_core
     steps:
     - uses: actions/checkout@v2
-    - name: Run tests
-      working-directory: ${{env.working-directory}}
-      run: cargo test --verbose
     - run: rustup target add wasm32-unknown-unknown
     - name: Build
       working-directory: ${{env.working-directory}}
