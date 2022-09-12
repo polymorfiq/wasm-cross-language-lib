@@ -8,13 +8,13 @@ cargo build --target wasm32-unknown-unknown --release;
 cd ..;
 
 // To use it in Elixir...
-cp lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm ../elixir/core/priv/lib_core.wasm;
+cp lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm elixir/core/priv/lib_core.wasm;
 cd elixir/core;
 mix deps.get;
 mix test;
 
 // To use it in NodeJS...
-cp lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm ../nodejs/core/vendor/lib_core.wasm;
+cp lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm nodejs/core/vendor/lib_core.wasm;
 cd nodejs/core;
 npm install;
 npm test;
