@@ -3,7 +3,7 @@ This is just a repository for me to test out building a multi-language library v
 ```
 // First, build the WASM library
 cd lib_core;
-cargo build --target wasm32-unknown-unknown --release;
+cargo build --release;
 cd ..;
 
 // To use it in Elixir...
