@@ -1,5 +1,4 @@
 #![no_std]
-mod graph;
 mod comm;
 mod surprise;
 use comm::LogMessage;
@@ -33,8 +32,8 @@ pub extern "C" fn alloc_utf8_log(bytes: usize) -> usize {
 }
 
 #[no_mangle]
-pub extern "C" fn flush_utf8_logs() -> i32 {
-    unsafe { LOG.flush(&do_log) as i32 }
+pub extern "C" fn flush_utf8_logs() {
+    unsafe { LOG.map(&do_log) }
 }
 
 #[no_mangle]
@@ -42,8 +41,12 @@ pub extern "C" fn multiply_by_two(data: usize) -> usize {
     data * 2
 }
 
-pub fn do_log(message: LogMessage<MAX_LOG_SIZE>) {
+pub fn do_log(message: &mut LogMessage<MAX_LOG_SIZE>) {
+    if message.length == 0 { return }
+
     unsafe {
         report_log(message.message.as_ptr() as *const () as usize, message.length);
     }
+
+    message.length = 0;
 }
