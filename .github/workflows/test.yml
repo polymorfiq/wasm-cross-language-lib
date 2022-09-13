@@ -118,3 +118,5 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: npm test -- --watchAll=false;
         working-directory: ${{env.working-directory}}
+      - run: npm run build;
+        working-directory: ${{env.working-directory}}

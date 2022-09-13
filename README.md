@@ -38,6 +38,7 @@ cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm languages/nodejs/vendor/
 cd languages/react-app;
 npm install;
 npm test -- --watchAll=false;
+npm run build;
 ```
 
 Checkout the [Github Action](./.github/workflows/test.yml) for more build information!
