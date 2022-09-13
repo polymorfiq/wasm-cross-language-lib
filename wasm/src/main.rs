@@ -1,8 +1,7 @@
 #![no_std]
-mod comm;
-mod surprise;
-use comm::LogMessage;
-use comm::LogPile;
+#![no_main]
+use lib::comm::LogMessage;
+use lib::comm::LogPile;
 
 extern "C" {
     fn report_log(addr: usize, length: usize);
