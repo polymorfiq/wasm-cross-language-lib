@@ -1,5 +1,5 @@
 const fs = require('fs');
-const modData = fs.readFileSync('./vendor/lib_core.wasm');
+const modData = fs.readFileSync('./vendor/wasm.wasm');
 const imports = {
   env: {report_log: (addr, length) => {}}
 };

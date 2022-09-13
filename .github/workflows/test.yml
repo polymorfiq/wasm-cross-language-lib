@@ -8,10 +8,22 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  test_and_build_rust:
+  test_rust:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./lib_core
+      working-directory: ./lib
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test Rust Lib
+      working-directory: ${{env.working-directory}}
+      run: cargo test
+
+  build_wasm:
+    needs: test_rust
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./wasm
+      wasm-file: wasm/target/wasm32-unknown-unknown/release/wasm.wasm
     steps:
     - uses: actions/checkout@v2
     - run: rustup target add wasm32-unknown-unknown
@@ -21,19 +33,42 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: core-wasm
-        path: lib_core/target/wasm32-unknown-unknown/release/lib_core.wasm
+        path: ${{env.wasm-file}}
+
+  generate_wat:
+    needs: build_wasm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Install wat-wasm
+        run: npm install wat-wasm -g
+      - uses: actions/download-artifact@master
+        with:
+          name: core-wasm
+          path: wasm
+      - name: Commit report
+        run: |
+          wat-wasm wasm/wasm.wasm -o deployed.wat
+          git config --global user.name 'Automated WAT-WASM'
+          git config --global user.email 'automated-wasm@users.noreply.github.com'
+          git add deployed.wat
+          git commit -m "Automated wat-wasm"
+          git push
 
   test_elixir:
-    needs: test_and_build_rust
+    needs: build_wasm
     runs-on: ubuntu-latest
     env:
-      working-directory: ./elixir/core
+      working-directory: ./languages/elixir
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@master
         with:
           name: core-wasm
-          path: elixir/core/priv/
+          path: languages/elixir/priv/
       - uses: actions/setup-elixir@v1
         with:
           otp-version: '25'
@@ -45,16 +80,16 @@ jobs:
         working-directory: ${{env.working-directory}}
 
   test_nodejs:
-    needs: test_and_build_rust
+    needs: build_wasm
     runs-on: ubuntu-latest
     env:
-      working-directory: ./nodejs/core
+      working-directory: ./languages/nodejs
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@master
         with:
           name: core-wasm
-          path: nodejs/core/vendor/
+          path: languages/nodejs/vendor/
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:

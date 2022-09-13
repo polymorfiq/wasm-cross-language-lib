@@ -2,7 +2,7 @@ defmodule Core do
   defstruct [:instance]
 
   def new do
-    wasm_file = Application.app_dir(:core, "priv/lib_core.wasm")
+    wasm_file = Application.app_dir(:core, "priv/wasm.wasm")
     {:ok, bytes} = File.read(wasm_file)
     {:ok, module} = Wasmex.Module.compile(bytes)
 
