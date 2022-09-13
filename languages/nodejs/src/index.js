@@ -1,3 +1,7 @@
+const fs = typeof window === 'object'
+    ? null
+    : eval('require("fs")')
+
 class MyLib {
     constructor(module) {
         this.module = module;
@@ -20,7 +24,7 @@ class MyLib {
 
 MyLib.load = function(wasm) {
     if (!MyLib._wasm) {
-        const fetchWasm = wasm || require('fs').promises.readFile(`${__dirname}/vendor/wasm.wasm`).then((r) => new Uint8Array(r));
+        const fetchWasm = wasm || fs.promises.readFile(`${__dirname}/vendor/wasm.wasm`).then((r) => new Uint8Array(r));
         MyLib._wasm = fetchWasm.then((modData) => {
             return WebAssembly.instantiate(modData, {
                 env: {
