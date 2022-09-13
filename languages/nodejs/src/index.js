@@ -1,5 +1,6 @@
-const fs = require('fs');
-const modData = fs.readFileSync(`${__dirname}/../vendor/wasm.wasm`);
+const fs = typeof window === 'object'
+    ? null
+    : eval('require("fs")')
 
 class MyLib {
     constructor(module) {
@@ -21,7 +22,18 @@ class MyLib {
     }
 }
 
-MyLib.load = function() {
+MyLib.load = function(wasm) {
+    if (!MyLib._wasm) {
+        const fetchWasm = wasm || fs.promises.readFile(`${__dirname}/vendor/wasm.wasm`).then((r) => new Uint8Array(r));
+        MyLib._wasm = fetchWasm.then((modData) => {
+            return WebAssembly.instantiate(modData, {
+                env: {
+                    report_log: MyLib.report_log
+                }
+            })
+        });
+    }
+
     return MyLib._wasm.then((module) => {
         MyLib.module = module;
         MyLib.instance = module.instance;
@@ -40,11 +52,5 @@ MyLib.report_log = function(addr, length) {
 MyLib.log = function(msg) {
     console.log(`WASM Log: ${msg}`);
 };
-
-MyLib._wasm = WebAssembly.instantiate(new Uint8Array(modData), {
-    env: {
-        report_log: MyLib.report_log
-    }
-});
  
 module.exports = MyLib;

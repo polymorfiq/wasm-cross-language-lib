@@ -1,4 +1,4 @@
 /node_modules
 
-/vendor/
-!/vendor/.keep
+/src/vendor/
+!/src/vendor/.keep
