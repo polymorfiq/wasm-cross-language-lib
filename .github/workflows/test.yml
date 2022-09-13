@@ -89,7 +89,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: core-wasm
-          path: languages/nodejs/vendor/
+          path: languages/nodejs/src/vendor/
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -109,7 +109,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: core-wasm
-          path: languages/nodejs/vendor/
+          path: languages/react-app/public/vendor/
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:

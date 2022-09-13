@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logo from './logo.svg';
 import './App.css';
 import MyLib from "my_lib";
 
 function App() {
   const [lib, setLib] = useState(null);
-  MyLib.load().then((lib) => setLib(lib));
+
+  useEffect(() => {
+    const wasm = fetch(`vendor/wasm.wasm`).then((r) => r.arrayBuffer())
+    MyLib.load(wasm).then((lib) => setLib(lib));
+  }, [])
 
   return (
     <div className="App">
