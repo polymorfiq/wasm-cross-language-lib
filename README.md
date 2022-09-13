@@ -32,6 +32,12 @@ cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm languages/nodejs/vendor/
 cd languages/nodejs;
 npm install;
 npm test;
+
+// To use it in a React App...
+cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm languages/nodejs/vendor/wasm.wasm;
+cd languages/react-app;
+npm install;
+npm test -- --watchAll=false;
 ```
 
 Checkout the [Github Action](./.github/workflows/test.yml) for more build information!
