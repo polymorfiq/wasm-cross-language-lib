@@ -36,7 +36,7 @@ jobs:
         path: $WASM_FILE
 
   generate_wat:
-    needs: test_and_build_rust
+    needs: build_wasm
     runs-on: ubuntu-latest
     steps:
       - name: Install wat-wasm
@@ -51,7 +51,7 @@ jobs:
           git push
 
   test_elixir:
-    needs: test_and_build_rust
+    needs: build_wasm
     runs-on: ubuntu-latest
     env:
       working-directory: ./languages/elixir
@@ -72,7 +72,7 @@ jobs:
         working-directory: ${{env.working-directory}}
 
   test_nodejs:
-    needs: test_and_build_rust
+    needs: build_wasm
     runs-on: ubuntu-latest
     env:
       working-directory: ./languages/nodejs
