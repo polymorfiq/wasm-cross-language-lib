@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./lib
-      wasm-file: wasm/target/wasm32-unknown-unknown/release/wasm.wasm
     steps:
     - uses: actions/checkout@v2
     - name: Test Rust Lib
@@ -24,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./wasm
+      wasm-file: wasm/target/wasm32-unknown-unknown/release/wasm.wasm
     steps:
     - uses: actions/checkout@v2
     - run: rustup target add wasm32-unknown-unknown
