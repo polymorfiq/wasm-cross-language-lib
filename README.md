@@ -1,7 +1,5 @@
 This is a repository for me to test out building a multi-language library via WebAssembly!
 
-## Details
-
 ### lib/
 Contains the main bulk of Rust code. Has no WASM-specific details, for easier testability and reusability.
 
