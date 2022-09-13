@@ -1,5 +1,22 @@
-This is just a repository for me to test out building a multi-language library via WebAssembly!
+This is a repository for me to test out building a multi-language library via WebAssembly!
 
+## Details
+
+### lib/
+Contains the main bulk of Rust code. Has no WASM-specific details, for easier testability and reusability.
+
+### languages/
+Contains various languages that can use the WASM binary for their shared backend logic
+
+### wasm/
+Contains the WASM code - depends on `lib` - details **imports** and **exports** for the WASM.
+
+## Building & Testing
+In general, you can checkout [build.sh](./build.sh) for details on building the binary and [test.sh](./test.sh) for details on running tests across the various languages.
+
+You can also checkout **[deployed.wat](./deployed.wat)** to see a **human-readable version of the library's current WASM!**
+
+Example:
 ```
 // First, build the WASM library
 cd wasm;
