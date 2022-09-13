@@ -98,3 +98,23 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: npm test
         working-directory: ${{env.working-directory}}
+
+  test_react_app:
+    needs: build_wasm
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./languages/react-app
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@master
+        with:
+          name: core-wasm
+          path: languages/nodejs/vendor/
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.6.0
+      - run: npm install
+        working-directory: ${{env.working-directory}}
+      - run: npm test -- --watchAll=false;
+        working-directory: ${{env.working-directory}}

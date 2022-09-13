@@ -14,3 +14,8 @@ pushd languages/nodejs;
 npm install;
 npm test;
 popd;
+
+pushd languages/react-app;
+npm install;
+npm test -- --watchAll=false;
+popd;

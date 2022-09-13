@@ -1,5 +1,5 @@
 const fs = require('fs');
-const modData = fs.readFileSync('./vendor/wasm.wasm');
+const modData = fs.readFileSync(`${__dirname}/../vendor/wasm.wasm`);
 
 class MyLib {
     constructor(module) {
