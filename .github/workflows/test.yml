@@ -9,7 +9,18 @@ env:
   WASM_FILE: wasm/target/wasm32-unknown-unknown/release/wasm.wasm
 
 jobs:
-  test_and_build_rust:
+  test_rust:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./lib
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test Rust Lib
+      working-directory: ${{env.working-directory}}
+      run: cargo test
+
+  build_wasm:
+    needs: test_rust
     runs-on: ubuntu-latest
     env:
       working-directory: ./wasm
