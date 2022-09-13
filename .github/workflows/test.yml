@@ -6,7 +6,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  WASM_FILE: wasm/target/wasm32-unknown-unknown/release/wasm.wasm
 
 jobs:
   test_rust:
@@ -42,9 +41,13 @@ jobs:
     steps:
       - name: Install wat-wasm
         run: npm install wat-wasm -g
+      - uses: actions/download-artifact@master
+        with:
+          name: core-wasm
+          path: wasm
       - name: Commit report
         run: |
-          wat-wasm $WASM_FILE -o current.wat
+          wat-wasm wasm/wasm.wasm -o current.wat
           git config --global user.name 'Automated WAT-WASM'
           git config --global user.email 'automated-wasm@users.noreply.github.com'
           git add current.wat
