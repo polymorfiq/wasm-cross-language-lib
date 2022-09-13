@@ -7,14 +7,14 @@ cargo build --release;
 cd ..;
 
 // To use it in Elixir...
-cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm elixir/core/priv/wasm.wasm;
-cd elixir/core;
+cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm languages/elixir/priv/wasm.wasm;
+cd languages/elixir;
 mix deps.get;
 mix test;
 
 // To use it in NodeJS...
-cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm nodejs/core/vendor/wasm.wasm;
-cd nodejs/core;
+cp wasm/target/wasm32-unknown-unknown/release/wasm.wasm languages/nodejs/vendor/wasm.wasm;
+cd languages/nodejs;
 npm install;
 npm test;
 ```
